@@ -1,10 +1,10 @@
 {
-  "name": "ui-select",
+  "name": "@playtestcloud/ui-select",
   "main": "./index.js",
-  "author": "http://github.com/angular-ui/ui-select/graphs/contributors",
-  "homepage": "http://github.com/angular-ui/ui-select",
+  "author": "https://github.com/playtestcloud/ui-select/graphs/contributors",
+  "homepage": "https://github.com/playtestcloud/ui-select",
   "repository": {
-    "url": "git://github.com/angular-ui/ui-select.git"
+    "url": "git://github.com/playtestcloud/ui-select.git"
   },
   "style": "dist/select.css",
   "version": "0.19.8",
@@ -16,7 +16,7 @@
     "conventional-recommended-bump": "0.0.3",
     "del": "~0.1.1",
     "event-stream": "~3.1.0",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "gulp-angular-templatecache": "^1.8.0",
     "gulp-bump": "^1.0.0",
     "gulp-concat": "^2.6.0",

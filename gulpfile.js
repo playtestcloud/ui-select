@@ -19,19 +19,11 @@ var config = {
       ' */\n\n\n'
 };
 
-gulp.task('default', ['build','test']);
-gulp.task('build', ['scripts', 'styles']);
-gulp.task('test', ['build', 'karma']);
-
-gulp.task('watch', ['build','karma-watch'], function() {
-  gulp.watch(['src/**/*.{js,html}'], ['build']);
-});
-
 gulp.task('clean', function(cb) {
   del(['dist', 'temp'], cb);
 });
 
-gulp.task('scripts', ['clean'], function() {
+gulp.task('scripts', gulp.series(function() {
 
   var buildTemplates = function () {
     return gulp.src('src/**/*.html')
@@ -72,9 +64,9 @@ gulp.task('scripts', ['clean'], function() {
     .pipe($.sourcemaps.write('./'))
     .pipe(gulp.dest('dist'));
 
-});
+}));
 
-gulp.task('styles', ['clean'], function() {
+gulp.task('styles', gulp.series(function() {
 
   return gulp.src(['src/common.css'], {base: 'src'})
     .pipe($.sourcemaps.init())
@@ -88,15 +80,24 @@ gulp.task('styles', ['clean'], function() {
     .pipe($.sourcemaps.write('../dist', {debug: true}))
     .pipe(gulp.dest('dist'));
 
-});
+}));
 
-gulp.task('karma', ['build'], function() {
+gulp.task('build', gulp.series('clean', 'scripts', 'styles'));
+
+gulp.task('karma', gulp.series('build', function() {
   karma.start({configFile : __dirname +'/karma.conf.js', singleRun: true});
-});
+}));
 
-gulp.task('karma-watch', ['build'], function() {
+gulp.task('karma-watch', gulp.series('build', function() {
   karma.start({configFile :  __dirname +'/karma.conf.js', singleRun: false});
-});
+}));
+
+gulp.task('test', gulp.series('build', 'karma'));
+gulp.task('default', gulp.series('build','test'));
+
+gulp.task('watch', gulp.series('build','karma-watch', function() {
+  gulp.watch(['src/**/*.{js,html}'], ['build']);
+}));
 
 gulp.task('pull', function(done) {
   $.git.pull();
@@ -191,9 +192,9 @@ gulp.task('docs:index', function () {
     .pipe(gulp.dest('./docs-built/'));
 });
 
-gulp.task('docs:watch', ['docs'], function() {
+gulp.task('docs:watch', gulp.series('docs', function() {
   gulp.watch(['docs/**/*.{js,html}'], ['docs']);
-});
+}));
 
 var handleError = function (err) {
   console.log(err.toString());
