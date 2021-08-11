@@ -1,7 +1,7 @@
 /*!
  * @playtestcloud/ui-select
  * https://github.com/playtestcloud/ui-select
- * Version: 0.19.8 - 2021-08-10T15:12:14.124Z
+ * Version: 0.19.8 - 2021-08-11T09:04:19.947Z
  * License: MIT
  */
 
