@@ -32,7 +32,14 @@ gulp.task('scripts', gulp.series(function() {
              spare: true,
              quotes: true
             }))
-      .pipe($.angularTemplatecache({module: 'ui.select'}));
+      .pipe($.angularTemplatecache({
+        module: 'ui.select',
+        transformUrl: function(url) {
+          // Remove leading slash which occurs in gulp 4
+					// https://github.com/miickel/gulp-angular-templatecache/issues/153
+					return url.replace(/^(\\|\/)+/g, '');
+        }
+      }));
   };
 
   var buildLib = function(){
